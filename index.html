@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr" id="htmlElement">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>بوابة التطوع - جامعة الملك خالد</title>
-  <!-- Bootstrap 5 RTL -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+  <title id="pageTitle">Volunteer Portal - King Khalid University</title>
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -37,13 +36,17 @@
       transition: all 0.3s ease;
     }
     
+    [dir="rtl"] body {
+      font-family: 'Tahoma', 'Arial', sans-serif;
+    }
+    
     .navbar {
       background-color: var(--kku-dark) !important;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    
+  
     .hero-section {
-      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://www.kku.edu.sa/sites/default/files/2023-01/kku_21.png');
       background-size: cover;
       background-position: center;
       color: white;
@@ -60,21 +63,6 @@
     .btn-primary:hover {
       background-color: var(--kku-dark);
       border-color: var(--kku-dark);
-      color: white;
-    }
-    
-    .btn-accent {
-      background-color: var(--accent-color);
-      color: white;
-    }
-    
-    .btn-external {
-      background-color: #2e7d32;
-      color: white;
-    }
-    
-    .btn-external:hover {
-      background-color: #1a3e1e;
       color: white;
     }
     
@@ -98,7 +86,17 @@
       margin-bottom: 30px;
     }
     
-    .section-title:after {
+    [dir="ltr"] .section-title:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 80px;
+      height: 3px;
+      background-color: var(--accent-color);
+    }
+    
+    [dir="rtl"] .section-title:after {
       content: "";
       position: absolute;
       bottom: 0;
@@ -132,17 +130,10 @@
       transform: translateY(-3px);
     }
     
-    .language-selector {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      z-index: 1000;
-    }
-    
     .dark-mode-toggle {
       position: absolute;
       top: 15px;
-      right: 15px;
+      left: 15px;
       z-index: 1000;
       background: none;
       border: none;
@@ -151,13 +142,21 @@
       cursor: pointer;
     }
     
-    .stat-box {
-      background-color: var(--kku-green);
-      color: white;
-      padding: 20px;
-      border-radius: 8px;
-      text-align: center;
-      margin: 10px 0;
+    [dir="rtl"] .dark-mode-toggle {
+      left: auto;
+      right: 15px;
+    }
+    
+    .language-switcher {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      z-index: 1000;
+    }
+    
+    [dir="rtl"] .language-switcher {
+      right: auto;
+      left: 15px;
     }
     
     .form-control, .form-select {
@@ -188,7 +187,6 @@
       }
     }
     
-    /* تخصيصات وضع الظلام */
     .dark-mode .section-title {
       color: var(--accent-color);
     }
@@ -211,34 +209,25 @@
   <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
     <div class="container">
       <a class="navbar-brand" href="#">
-        <img src="https://www.kku.edu.sa/sites/default/files/logo_0.png" alt="جامعة الملك خالد" height="40">
+        <img src="https://images.seeklogo.com/logo-png/53/2/king-khalid-university-logo-png_seeklogo-539041.png" alt="University Logo" height="40">
       </a>
       <button class="dark-mode-toggle" id="darkModeToggle">
         <i class="fas fa-moon"></i>
       </button>
+      <div class="language-switcher">
+        <button class="btn btn-light btn-sm" id="languageToggle">
+          <span id="currentLanguage">العربية</span>
+        </button>
+      </div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link active" href="#">الرئيسية</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#projects">الفرص التطوعية</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#register">التسجيل</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#about">عن البرنامج</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#contact">تواصل معنا</a>
-          </li>
+        <ul class="navbar-nav me-auto" id="mainNav">
+          <!-- Navigation items will be populated by JavaScript -->
         </ul>
         <div class="d-flex gap-2">
-          <a href="#register" class="btn btn-primary">سجل الآن</a>
+          <a href="#register" class="btn btn-primary" id="registerBtn">Register Now</a>
         </div>
       </div>
     </div>
@@ -247,11 +236,11 @@
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="container">
-      <h1 class="display-4 fw-bold mb-4">ساهم في بناء مجتمع أفضل</h1>
-      <p class="lead mb-5">انضم إلى برنامج التطوع بجامعة الملك خالد وكن جزءاً من التغيير الإيجابي</p>
+      <h1 class="display-4 fw-bold mb-4" id="heroTitle">Help Build a Better Community</h1>
+      <p class="lead mb-5" id="heroSubtitle">Join King Khalid University's Volunteer Program and be part of positive change</p>
       <div class="d-flex justify-content-center gap-3">
-        <a href="#register" class="btn btn-primary btn-lg px-4">سجل كطالب/موظف</a>
-        <a href="#external" class="btn btn-primary btn-lg px-4">متطوع خارجي</a>
+        <a href="#register" class="btn btn-primary btn-lg px-4" id="studentBtn">Register as Student/Staff</a>
+        <a href="#external" class="btn btn-primary btn-lg px-4" id="externalBtn">External Volunteer</a>
       </div>
     </div>
   </section>
@@ -259,34 +248,9 @@
   <!-- Features Section -->
   <section class="py-5 bg-white">
     <div class="container">
-      <div class="row text-center">
-        <div class="col-md-4">
-          <div class="p-4">
-            <div class="feature-icon">
-              <i class="fas fa-hands-helping"></i>
-            </div>
-            <h4>تأثير مجتمعي</h4>
-            <p>ساهم في مشاريع تطوعية ذات أثر إيجابي على المجتمع</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="p-4">
-            <div class="feature-icon">
-              <i class="fas fa-user-graduate"></i>
-            </div>
-            <h4>تطوير المهارات</h4>
-            <p>اكتسب مهارات قيادية وتنظيمية جديدة</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="p-4">
-            <div class="feature-icon">
-              <i class="fas fa-award"></i>
-            </div>
-            <h4>شهادات معتمدة</h4>
-            <p>احصل على شهادات مشاركة معتمدة من الجامعة</p>
-          </div>
-        </div>
+      <h2 class="section-title text-center" id="featuresTitle">Why Volunteer With Us</h2>
+      <div class="row text-center" id="featuresContainer">
+        <!-- Features will be populated by JavaScript -->
       </div>
     </div>
   </section>
@@ -297,14 +261,14 @@
       <div class="row align-items-center">
         <div class="col-md-6 mb-4 mb-md-0">
           <img src="https://images.unsplash.com/photo-1521791055366-0d553872125f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" 
-               alt="متطوعين خارجيين" class="img-fluid rounded shadow">
+               alt="Volunteers working together" class="img-fluid rounded shadow">
         </div>
         <div class="col-md-6">
-          <h2 class="section-title">التطوع لغير المنتسبين للجامعة</h2>
-          <p class="lead">فرصة للمشاركة الفاعلة في خدمة المجتمع</p>
-          <p>نرحب بجميع أفراد المجتمع الراغبين في المشاركة في برامجنا التطوعية، سواء كانوا من طلاب الجامعة أو من خارجها.</p>
-          <p>كمتطوع خارجي، ستتمتع بنفس المزايا والفرص التدريبية التي يحصل عليها متطوعو الجامعة.</p>
-          <a href="#external-register" class="btn btn-primary">سجل كمتطوع خارجي</a>
+          <h2 class="section-title" id="externalTitle">Volunteering for Non-University Members</h2>
+          <p class="lead" id="externalSubtitle">An opportunity for active participation in community service</p>
+          <p id="externalText1">We welcome all community members who wish to participate in our volunteer programs, whether they are university students or not.</p>
+          <p id="externalText2">As an external volunteer, you will enjoy the same benefits and training opportunities as university volunteers.</p>
+          <a href="#external-register" class="btn btn-primary" id="externalRegisterBtn">Register as External Volunteer</a>
         </div>
       </div>
     </div>
@@ -313,56 +277,56 @@
   <!-- Registration Form -->
   <section id="register" class="py-5 bg-white">
     <div class="container">
-      <h2 class="section-title text-center">سجل كمتطوع في الجامعة</h2>
+      <h2 class="section-title text-center" id="formTitle">Register as a Volunteer</h2>
       <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
           <form class="p-4 border rounded bg-light">
             <div class="mb-3">
-              <label for="fullName" class="form-label">الاسم الكامل</label>
+              <label for="fullName" class="form-label" id="nameLabel">Full Name</label>
               <input type="text" class="form-control" id="fullName" required>
             </div>
             
             <div class="mb-3">
-              <label class="form-label">نوع المتطوع</label>
+              <label class="form-label" id="volunteerTypeLabel">Volunteer Type</label>
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="volunteerType" id="universityVolunteer" value="university" checked>
-                <label class="form-check-label" for="universityVolunteer">
-                  طالب/موظف في الجامعة
+                <label class="form-check-label" for="universityVolunteer" id="universityLabel">
+                  University Student/Staff
                 </label>
               </div>
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="volunteerType" id="externalVolunteer" value="external">
-                <label class="form-check-label" for="externalVolunteer">
-                  متطوع خارجي
+                <label class="form-check-label" for="externalVolunteer" id="externalLabel">
+                  External Volunteer
                 </label>
               </div>
             </div>
             
             <div class="mb-3" id="universityFields">
-              <label for="universityId" class="form-label">رقم الجامعة/الموظف</label>
+              <label for="universityId" class="form-label" id="idLabel">University/Staff ID</label>
               <input type="text" class="form-control" id="universityId">
             </div>
             
             <div class="mb-3">
-              <label for="email" class="form-label">البريد الإلكتروني</label>
+              <label for="email" class="form-label" id="emailLabel">Email Address</label>
               <input type="email" class="form-control" id="email" required>
             </div>
             <div class="mb-3">
-              <label for="phone" class="form-label">رقم الجوال</label>
+              <label for="phone" class="form-label" id="phoneLabel">Phone Number</label>
               <input type="tel" class="form-control" id="phone" required>
             </div>
             <div class="mb-3">
-              <label for="interest" class="form-label">مجال الاهتمام</label>
+              <label for="interest" class="form-label" id="interestLabel">Area of Interest</label>
               <select class="form-select" id="interest" required>
-                <option value="" selected disabled>اختر مجال الاهتمام</option>
-                <option value="education">التعليم</option>
-                <option value="health">الصحة</option>
-                <option value="environment">البيئة</option>
-                <option value="other">أخرى</option>
+                <option value="" selected disabled id="selectDefault">Select your interest</option>
+                <option value="education" id="educationOption">Education</option>
+                <option value="health" id="healthOption">Health</option>
+                <option value="environment" id="environmentOption">Environment</option>
+                <option value="other" id="otherOption">Other</option>
               </select>
             </div>
             <div class="text-center mt-4">
-              <button type="submit" class="btn btn-success px-4">إرسال الطلب</button>
+              <button type="submit" class="btn btn-success px-4" id="submitBtn">Submit Application</button>
             </div>
           </form>
         </div>
@@ -370,12 +334,285 @@
     </div>
   </section>
 
-
-  <!-- بقية الأقسام (About, Contact, FAQ, Footer) تبقى كما هي في الكود السابق -->
+  <!-- Footer -->
+  <footer class="text-center">
+    <div class="container">
+      <p id="copyright">&copy; 2025 King Khalid University. All rights reserved.</p>
+      <div>
+        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </footer>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    // Language content
+    const content = {
+      en: {
+        pageTitle: "Volunteer Portal - King Khalid University",
+        navItems: [
+          { text: "Home", href: "#" },
+          { 
+            text: "Volunteer Opportunities", 
+            dropdown: [
+              { text: "Education", href: "#education" },
+              { text: "Health", href: "#health" },
+              { text: "Environment", href: "#environment" },
+              { text: "Other", href: "#other" }
+            ]
+          },
+          { text: "About the Program", href: "#about" },
+          { text: "About Us", href: "#about-us" }
+        ],
+        registerBtn: "Register Now",
+        heroTitle: "Help Build a Better Community",
+        heroSubtitle: "Join King Khalid University's Volunteer Program and be part of positive change",
+        studentBtn: "Register as Student/Staff",
+        externalBtn: "External Volunteer",
+        featuresTitle: "Why Volunteer With Us",
+        features: [
+          { icon: "hands-helping", title: "Community Impact", text: "Contribute to volunteer projects with positive community impact" },
+          { icon: "user-graduate", title: "Skill Development", text: "Gain new leadership and organizational skills" },
+          { icon: "award", title: "Certificates", text: "Receive certified participation certificates from the university" }
+        ],
+        externalTitle: "Volunteering for Non-University Members",
+        externalSubtitle: "An opportunity for active participation in community service",
+        externalText1: "We welcome all community members who wish to participate in our volunteer programs, whether they are university students or not.",
+        externalText2: "As an external volunteer, you will enjoy the same benefits and training opportunities as university volunteers.",
+        externalRegisterBtn: "Register as External Volunteer",
+        formTitle: "Register as a Volunteer",
+        nameLabel: "Full Name",
+        volunteerTypeLabel: "Volunteer Type",
+        universityLabel: "University Student/Staff",
+        externalLabel: "External Volunteer",
+        idLabel: "University/Staff ID",
+        emailLabel: "Email Address",
+        phoneLabel: "Phone Number",
+        interestLabel: "Area of Interest",
+        selectDefault: "Select your interest",
+        educationOption: "Education",
+        healthOption: "Health",
+        environmentOption: "Environment",
+        otherOption: "Other",
+        submitBtn: "Submit Application",
+        copyright: "© 2025 King Khalid University. All rights reserved.",
+        currentLanguage: "العربية"
+      },
+      ar: {
+        pageTitle: "بوابة التطوع - جامعة الملك خالد",
+        navItems: [
+          { text: "الرئيسية", href: "#" },
+          { 
+            text: "الفرص التطوعية", 
+            dropdown: [
+              { text: "التعليم", href: "#education" },
+              { text: "الصحة", href: "#health" },
+              { text: "البيئة", href: "#environment" },
+              { text: "أخرى", href: "#other" }
+            ]
+          },
+          { text: "عن البرنامج", href: "#about" },
+          { text: "من نحن", href: "#about-us" }
+        ],
+        registerBtn: "سجل الآن",
+        heroTitle: "ساهم في بناء مجتمع أفضل",
+        heroSubtitle: "انضم إلى برنامج التطوع بجامعة الملك خالد وكن جزءاً من التغيير الإيجابي",
+        studentBtn: "سجل كطالب/موظف",
+        externalBtn: "متطوع خارجي",
+        featuresTitle: "لماذا تتطوع معنا",
+        features: [
+          { icon: "hands-helping", title: "تأثير مجتمعي", text: "ساهم في مشاريع تطوعية ذات أثر إيجابي على المجتمع" },
+          { icon: "user-graduate", title: "تطوير المهارات", text: "اكتسب مهارات قيادية وتنظيمية جديدة" },
+          { icon: "award", title: "شهادات معتمدة", text: "احصل على شهادات مشاركة معتمدة من الجامعة" }
+        ],
+        externalTitle: "التطوع لغير المنتسبين للجامعة",
+        externalSubtitle: "فرصة للمشاركة الفاعلة في خدمة المجتمع",
+        externalText1: "نرحب بجميع أفراد المجتمع الراغبين في المشاركة في برامجنا التطوعية، سواء كانوا من طلاب الجامعة أو من خارجها.",
+        externalText2: "كمتطوع خارجي، ستتمتع بنفس المزايا والفرص التدريبية التي يحصل عليها متطوعو الجامعة.",
+        externalRegisterBtn: "سجل كمتطوع خارجي",
+        formTitle: "سجل كمتطوع في الجامعة",
+        nameLabel: "الاسم الكامل",
+        volunteerTypeLabel: "نوع المتطوع",
+        universityLabel: "طالب/موظف في الجامعة",
+        externalLabel: "متطوع خارجي",
+        idLabel: "رقم الجامعة/الموظف",
+        emailLabel: "البريد الإلكتروني",
+        phoneLabel: "رقم الجوال",
+        interestLabel: "مجال الاهتمام",
+        selectDefault: "اختر مجال الاهتمام",
+        educationOption: "التعليم",
+        healthOption: "الصحة",
+        environmentOption: "البيئة",
+        otherOption: "أخرى",
+        submitBtn: "إرسال الطلب",
+        copyright: "© 2025 جامعة الملك خالد. جميع الحقوق محفوظة.",
+        currentLanguage: "English"
+      }
+    };
+
+    // Current language (default to English)
+    let currentLang = 'en';
+
+    // DOM elements
+    const htmlElement = document.getElementById('htmlElement');
+    const languageToggle = document.getElementById('languageToggle');
+    const currentLanguageSpan = document.getElementById('currentLanguage');
+
+    // Initialize the page with English content
+    updateContent();
+
+    // Language toggle functionality
+    languageToggle.addEventListener('click', () => {
+      currentLang = currentLang === 'en' ? 'ar' : 'en';
+      updateContent();
+    });
+
+    // Update all content based on current language
+    function updateContent() {
+      const langContent = content[currentLang];
+      
+      // Update HTML direction
+      htmlElement.lang = currentLang;
+      htmlElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+      
+      // Update page title
+      document.title = langContent.pageTitle;
+      
+      // Update navigation
+      updateNavigation(langContent);
+      
+      // Update hero section
+      document.getElementById('heroTitle').textContent = langContent.heroTitle;
+      document.getElementById('heroSubtitle').textContent = langContent.heroSubtitle;
+      document.getElementById('studentBtn').textContent = langContent.studentBtn;
+      document.getElementById('externalBtn').textContent = langContent.externalBtn;
+      
+      // Update features section
+      document.getElementById('featuresTitle').textContent = langContent.featuresTitle;
+      updateFeatures(langContent);
+      
+      // Update external volunteer section
+      document.getElementById('externalTitle').textContent = langContent.externalTitle;
+      document.getElementById('externalSubtitle').textContent = langContent.externalSubtitle;
+      document.getElementById('externalText1').textContent = langContent.externalText1;
+      document.getElementById('externalText2').textContent = langContent.externalText2;
+      document.getElementById('externalRegisterBtn').textContent = langContent.externalRegisterBtn;
+      
+      // Update registration form
+      document.getElementById('formTitle').textContent = langContent.formTitle;
+      document.getElementById('nameLabel').textContent = langContent.nameLabel;
+      document.getElementById('volunteerTypeLabel').textContent = langContent.volunteerTypeLabel;
+      document.getElementById('universityLabel').textContent = langContent.universityLabel;
+      document.getElementById('externalLabel').textContent = langContent.externalLabel;
+      document.getElementById('idLabel').textContent = langContent.idLabel;
+      document.getElementById('emailLabel').textContent = langContent.emailLabel;
+      document.getElementById('phoneLabel').textContent = langContent.phoneLabel;
+      document.getElementById('interestLabel').textContent = langContent.interestLabel;
+      document.getElementById('selectDefault').textContent = langContent.selectDefault;
+      document.getElementById('educationOption').textContent = langContent.educationOption;
+      document.getElementById('healthOption').textContent = langContent.healthOption;
+      document.getElementById('environmentOption').textContent = langContent.environmentOption;
+      document.getElementById('otherOption').textContent = langContent.otherOption;
+      document.getElementById('submitBtn').textContent = langContent.submitBtn;
+      
+      // Update footer
+      document.getElementById('copyright').textContent = langContent.copyright;
+      
+      // Update language toggle button
+      currentLanguageSpan.textContent = langContent.currentLanguage;
+    }
+
+    // Update navigation items
+    function updateNavigation(langContent) {
+      const navContainer = document.getElementById('mainNav');
+      navContainer.innerHTML = '';
+      
+      langContent.navItems.forEach(item => {
+        if (item.dropdown) {
+          // Create dropdown item
+          const li = document.createElement('li');
+          li.className = 'nav-item dropdown';
+          
+          const a = document.createElement('a');
+          a.className = 'nav-link dropdown-toggle';
+          a.href = '#';
+          a.role = 'button';
+          a.setAttribute('data-bs-toggle', 'dropdown');
+          a.textContent = item.text;
+          
+          const dropdownMenu = document.createElement('ul');
+          dropdownMenu.className = 'dropdown-menu';
+          dropdownMenu.style.backgroundColor = 'var(--kku-dark)';
+          
+          item.dropdown.forEach(dropdownItem => {
+            const dropdownLi = document.createElement('li');
+            const dropdownA = document.createElement('a');
+            dropdownA.className = 'dropdown-item text-white';
+            dropdownA.style.backgroundColor = 'var(--kku-green)';
+            dropdownA.href = dropdownItem.href;
+            dropdownA.textContent = dropdownItem.text;
+            dropdownLi.appendChild(dropdownA);
+            dropdownMenu.appendChild(dropdownLi);
+          });
+          
+          li.appendChild(a);
+          li.appendChild(dropdownMenu);
+          navContainer.appendChild(li);
+        } else {
+          // Create regular nav item
+          const li = document.createElement('li');
+          li.className = 'nav-item';
+          
+          const a = document.createElement('a');
+          a.className = 'nav-link';
+          a.href = item.href;
+          a.textContent = item.text;
+          
+          li.appendChild(a);
+          navContainer.appendChild(li);
+        }
+      });
+      
+      // Update register button
+      document.getElementById('registerBtn').textContent = langContent.registerBtn;
+    }
+
+    // Update features section
+    function updateFeatures(langContent) {
+      const featuresContainer = document.getElementById('featuresContainer');
+      featuresContainer.innerHTML = '';
+      
+      langContent.features.forEach(feature => {
+        const col = document.createElement('div');
+        col.className = 'col-md-4';
+        
+        const featureDiv = document.createElement('div');
+        featureDiv.className = 'p-4';
+        
+        const iconDiv = document.createElement('div');
+        iconDiv.className = 'feature-icon';
+        
+        const icon = document.createElement('i');
+        icon.className = `fas fa-${feature.icon}`;
+        iconDiv.appendChild(icon);
+        
+        const title = document.createElement('h4');
+        title.textContent = feature.title;
+        
+        const text = document.createElement('p');
+        text.textContent = feature.text;
+        
+        featureDiv.appendChild(iconDiv);
+        featureDiv.appendChild(title);
+        featureDiv.appendChild(text);
+        col.appendChild(featureDiv);
+        featuresContainer.appendChild(col);
+      });
+    }
+
     // Dark Mode Toggle
     const darkModeToggle = document.getElementById('darkModeToggle');
     const body = document.body;
@@ -421,16 +658,5 @@
       });
     });
   </script>
-  <footer class="text-center">
-    <div class="container">
-      <p>&copy; 2023 جامعة الملك خالد. جميع الحقوق محفوظة.</p>
-      <div>
-        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-      </div>
-    </div>
-  </footer>
 </body>
 </html>
